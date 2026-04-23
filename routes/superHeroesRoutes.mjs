@@ -10,13 +10,26 @@ import { validateSuperHeroe } from '../middlewares/middlewareSuperheroes.mjs';
 //validationResult: lee los errores que body()acumulóen la rquest y los epone.
 import {
     obtenerTodosLosSuperheroesController, crearSuperHeroeController, actualizarSuperHeroeController,
-    eliminarSuperHeroeporIdController, eliminarSuperHeroeporNombreController
-}
-    from '../controllers/superheroesControllers.mjs';
+    eliminarSuperHeroeporIdController, eliminarSuperHeroeporNombreController, 
+    obtenerSuperheroesMayoresDe30Controller, obtenerSuperheroePorIdController,buscarSuperheroesPorAtributoController
+}    from '../controllers/superheroesControllers.mjs';
 
 const router = express.Router();
 
 //Rutas fijas:
+//TP3-S2
+//Superheroes mayores a 30 años
+//http://localhost:3000/api/heroes/mayores-30
+router.get('/heroes/mayores-30', obtenerSuperheroesMayoresDe30Controller);
+//Rutas con parámetros
+//Superheroes por id
+//http://localhost:3000/api/heroes/69c6fd59d90e243b1c0fad1b
+router.get('/heroes/:id', obtenerSuperheroePorIdController);
+//Superheroes por atributo
+//http://localhost:3000/api/heroes/buscar/planetaOrigen/Tierra
+router.get('/heroes/buscar/:atributo/:valor', buscarSuperheroesPorAtributoController);
+
+//
 //Todos los superheroes
 //GET- Mostrar todos los superheroes
 // http://localhost:3000/api/heroes

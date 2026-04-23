@@ -1,8 +1,11 @@
 //La capa de controladores gestiona las solicitudes del cliente y llama
 //a la capa de servicios para realizar las operaciones necesarias
 
-import { obtenerTodosLosSuperheroes, crearSuperHeroe, actualizarSuperHeroe, 
-    eliminarSuperHeroeporID, eliminarSuperHeroeporNombre}
+import {
+    obtenerTodosLosSuperheroes, crearSuperHeroe, actualizarSuperHeroe,
+    eliminarSuperHeroeporID, eliminarSuperHeroeporNombre,
+    obtenerSuperheroePorId, buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30
+}
     from "../services/superheroesService.mjs";
 
 import { renderizarListaSuperheroes }
@@ -26,7 +29,7 @@ export async function crearSuperHeroeController(req, res) {
     try {
         const superheroe = req.body;
         const nuevoSuperheroe = await crearSuperHeroe(superheroe);
-        
+
         // Respondemos con el objeto creado y un código 201 (Creado)
         res.status(201).send({
             mensaje: 'Superhéroe creado con éxito',
@@ -44,7 +47,7 @@ export async function actualizarSuperHeroeController(req, res) {
     try {
         const { id } = req.params; // Toma el ID que viene en la URL /api/heroes/:id
         const datosActualizados = req.body;
-        
+
         const superheroe = await actualizarSuperHeroe(id, datosActualizados);
 
         if (!superheroe) {
@@ -65,7 +68,7 @@ export async function actualizarSuperHeroeController(req, res) {
 export async function eliminarSuperHeroeporIdController(req, res) {
     try {
         const { id } = req.params; // Toma el ID que viene en la URL /api/heroes/id/:id
-        
+
         const superheroe = await eliminarSuperHeroeporID(id);
 
         if (!superheroe) {
@@ -86,7 +89,7 @@ export async function eliminarSuperHeroeporIdController(req, res) {
 export async function eliminarSuperHeroeporNombreController(req, res) {
     try {
         const { nombre } = req.params; // Toma el nombre que viene en la URL /api/heroes/nombre/:nombre
-        
+
         const superheroe = await eliminarSuperHeroeporNombre(nombre);
 
         if (!superheroe) {
@@ -104,5 +107,91 @@ export async function eliminarSuperHeroeporNombreController(req, res) {
         });
     }
 }
+///
+export async function obtenerSuperheroePorIdController(req, res) {
+
+    try {
+
+        const { id } = req.params;
+
+        const superheroe = await obtenerSuperheroePorId(id);
+
+        if (!superheroe) {
+
+            return res.status(404).send({ mensaje: 'Superheroe no encontrado' });
+
+        }
+        const superheroeFormateado = renderizarSuperheroe(superheroe);
+
+        res.status(200).json(superheroeFormateado);
+
+    } catch (error) {
+
+        res.status(500).send({
+            mensaje: 'Error al obtener el superheroe',
+
+            error: error.message
+        });
+    }
+}
+export async function buscarSuperheroesPorAtributoController(req, res) {
+
+    try {
+
+        const { atributo, valor } = req.params;
+
+        const superheroes = await buscarSuperheroesPorAtributo(atributo, valor);
+
+        if (superheroes.length === 0) {
+
+            return res.status(404).send(
+
+                { mensaje: 'No se encontraron superhéroes con ese atributo' });
+
+        }
+        const superheroesFormateados = renderizarListaSuperheroes(superheroes);
+
+        res.status(200).json(superheroesFormateados);
+
+    } catch (error) {
+
+        res.status(500).send({
+
+            mensaje: 'Error al buscar los superheroes',
+
+            error: error.message
+
+        });
+    }
+
+}
+export async function obtenerSuperheroesMayoresDe30Controller(req, res) {
+
+    try {
+
+        const superheroes = await obtenerSuperheroesMayoresDe30();
+
+        if (superheroes.length === 0) {
+
+            return res.status(404).send(
+
+                { mensaje: 'No se encontraron superhéroes mayores de 30 años' });
+
+        }
 
 
+
+        const superheroesFormateados = renderizarListaSuperheroes(superheroes);
+
+        res.status(200).json(superheroesFormateados);
+
+    } catch (error) {
+
+        res.status(500).send({
+
+            mensaje: 'Error al obtener superheroes mayores de 30',
+
+            error: error.message
+        });
+    }
+}

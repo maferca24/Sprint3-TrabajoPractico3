@@ -23,6 +23,18 @@ export async function eliminarSuperHeroeporID(id) {
 export async function eliminarSuperHeroeporNombre(nombre) {
     return await superHeroRepository.eliminarSuperHeroeporNombre(nombre);
 }
+///////
+export async function obtenerSuperheroePorId(id) {
+    return await superHeroRepository.obtenerPorId(id);
+}
+export async function buscarSuperheroesPorAtributo(atributo, valor) {
+    return await superHeroRepository.buscarPorAtributo(atributo, valor);
+
+}
+export async function obtenerSuperheroesMayoresDe30() {
+    return await superHeroRepository.obtenerMayoresDe30();
+}
+
 
 
 
