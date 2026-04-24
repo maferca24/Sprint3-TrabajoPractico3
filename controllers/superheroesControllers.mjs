@@ -11,6 +11,14 @@ import {
 import { renderizarListaSuperheroes }
     from '../views/responseViews.mjs'
 
+//Nuevos TP3
+//Nuevo controlador para renderizar el dashboard con la lista de heroes directamente
+export async function getDashboardController(req, res){
+    const heroe=await obtenerTodosLosSuperheroesController();
+    //vista para renderizar con los datos de los heroes obtenidos del servicio
+    res.render("dashboard",{heroes});
+}    
+
 export async function obtenerTodosLosSuperheroesController(req, res) {
     try {
         const superheroes = await obtenerTodosLosSuperheroes();

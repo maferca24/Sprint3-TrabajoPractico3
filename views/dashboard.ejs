@@ -1,0 +1,47 @@
+head>
+    <meta charset="UTF-8">
+    <title>Dashboard Superhéroes</title>
+</head>
+
+<a href="/dashboard/nuevo">Agregar Superhéroe</a>
+
+<ul>
+    <% heroes.forEach(function(hero){ %>
+        <li>
+            <a href="/dashboard/modificar/<%= hero._id %>">
+                <%= hero.nombreSuperHeroe %> - (Edad: <%= hero.edad %>)
+            </a>
+
+            <button onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
+                Eliminar
+            </button>
+        </li>
+    <% }); %>
+</ul>
+
+<script>
+    async function eliminar(id, nombre) {
+        // Agregamos espacios para que se lea bien: "eliminar a Batman?"
+        const confirmar = confirm("¿Estás seguro que deseas eliminar a " + nombre + "? Esta acción no se puede deshacer.");
+        
+        if (!confirmar) return;
+
+        try {
+            const res = await fetch("/api/heroes/id/" + id, { method: "DELETE" });
+
+            if (res.ok) {
+                //Verifica que el servidor respondió con un código exitoso (como un 200 o 204) 
+                // antes de decirle al usuario que todo salió bien.
+                alert(nombre + " eliminado correctamente.");
+                // Refrescamos la página para que desaparezca de la lista
+                window.location.reload();
+            } else {
+                const errorData = await res.json();
+                alert("Error al eliminar: " + (errorData.mensaje || "Error desconocido"));
+            }
+        } catch (error) {
+            console.error("Error en la petición:", error);
+            alert("No se pudo conectar con el servidor.");
+        }
+    }
+</script>
