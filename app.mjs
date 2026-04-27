@@ -1,6 +1,7 @@
 import express from 'express';
 import {connectDB} from './config/dbConfig.mjs';
 import superHeroRoutes from './routes/superHeroesRoutes.mjs';
+import superHeroFront from './routes/superHeroFront.mjs'
 
 const app = express();
 const PORT = process.env.PORT||3000;
@@ -17,8 +18,8 @@ connectDB();
 //Configuración de rutas- Rutas backend para la api de superheroes
 app.use('/api', superHeroRoutes);
 
-//ruta frontend/plantillas pare el dashboard de heroes
-app.use("/dashboard", heroesroutefront);
+//ruta frontend/plantillas para el dashboard de heroes
+app.use("/dashboard", superHeroFront);
 
 //Manejo de errores para rutas no encontradas
 app.use((req,res)=>{
