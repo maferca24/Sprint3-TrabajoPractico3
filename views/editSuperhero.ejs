@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Superhéroe</title>
+</head>
+<body>
+    <h1>Editar Superhéroe: <%= hero.nombreSuperHeroe %></h1>
+    
+    <form id="editForm">
+        <label>Nombre del Superhéroe:</label>
+        <input type="text" id="nombreSuperHeroe" value="<%= heroe.nombreSuperHeroe %>" required><br>
+
+        <label>Nombre Real:</label>
+        <input type="text" id="nombreReal" value="<%= heroe.nombreReal %>" required><br>
+
+        <label>Edad:</label>
+        <input type="number" id="edad" value="<%= heroe.edad %>"><br>
+
+        <label>Planeta de Origen:</label>
+        <input type="text" id="planetaOrigen" value="<%= heroe.planetaOrigen %>"><br>
+
+        <label>Poderes (separados por coma):</label>
+        <input type="text" id="poderes" value="<%= heroe.poderes.join(', ') %>"><br>
+
+        <label>Aliados:</label>
+        <input type="text" id="aliados" value="<%= heroe.aliados.join(', ') %>"><br>
+
+        <label>Enemigos:</label>
+        <input type="text" id="enemigos" value="<%= heroe.enemigos.join(', ') %>"><br>
+
+        <label>Creador:</label>
+        <input type="text" id="creador" value="<%= heroe.creador %>"><br>
+
+        <button type="submit">Actualizar</button>
+        <a href="/dashboard">Cancelar</a>
+    </form>
+
+    <script>
+        document.getElementById("editForm").addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Tomar los datos del formulario- Quitar espacios?
+            const data = {
+                nombreSuperHeroe: document.getElementById('nombreSuperHeroe').value.trim(),
+                nombreReal: document.getElementById('nombreReal').value.trim(),
+                edad: parseInt(document.getElementById('edad').value),
+                planetaOrigen: document.getElementById('planetaOrigen').value.trim(),
+                // Volvemos a convertir el texto en Array para enviarlo a la API
+                poderes: document.getElementById('poderes').value.split(',').map(p => p.trim()).filter(p => p !== ''),
+                aliados: document.getElementById('aliados').value.split(',').map(p => p.trim()).filter(p => p !== '')
+            };
+
+            try {
+                // Enviar petición con ID
+                const response = await fetch('/api/heroes/id/<%= hero._id %>', { 
+                    method: 'PUT', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('¡Actualizado con éxito!');
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Error al actualizar');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de conexión');
+            }
+        });
+    </script>
+</body>
+</html>
