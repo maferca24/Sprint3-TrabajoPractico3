@@ -11,7 +11,8 @@ import { validateSuperHeroe } from '../middlewares/middlewareSuperheroes.mjs';
 import {
     obtenerTodosLosSuperheroesController, crearSuperHeroeController, actualizarSuperHeroeController,
     eliminarSuperHeroeporIdController, eliminarSuperHeroeporNombreController, 
-    obtenerSuperheroesMayoresDe30Controller, obtenerSuperheroePorIdController,buscarSuperheroesPorAtributoController
+    obtenerSuperheroesMayoresDe30Controller, obtenerSuperheroePorIdController,buscarSuperheroesPorAtributoController,
+    getDashboardController
 }    from '../controllers/superheroesControllers.mjs';
 
 const router = express.Router();
@@ -46,6 +47,8 @@ router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);
 //PUT- Actualizar un superheroe por id
 //http://localhost:3000/api/heroes/:id
 router.put('/heroes/:id', validateSuperHeroe, actualizarSuperHeroeController);
+
+
 
 /********
  Requerimiento: Agregar un endpoint que al realizarle una peticion

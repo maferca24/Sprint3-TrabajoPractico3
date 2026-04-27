@@ -4,7 +4,7 @@
 import {
     obtenerTodosLosSuperheroes, crearSuperHeroe, actualizarSuperHeroe,
     eliminarSuperHeroeporID, eliminarSuperHeroeporNombre,
-    obtenerSuperheroePorId, buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30, getDashboardController
+    obtenerSuperheroePorId, buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30
 }
     from "../services/superheroesService.mjs";
 
@@ -13,13 +13,24 @@ import { renderizarListaSuperheroes }
 
 //Nuevos TP3
 
-//Nuevo controlador para renderizar el dashboard con la lista de heroes directamente
-export async function getDashboardController(req, res){
-    const heroe=await obtenerTodosLosSuperheroesController();
-    //vista para renderizar con los datos de los heroes obtenidos del servicio
-    res.render("dashboard",{heroes});
-}  
-//  
+/// Nuevo controlador para renderizar el dashboard
+
+export async function getDashboardController(req, res) {
+    try {
+        const superheroes = await obtenerTodosLosSuperheroes();
+        
+        // COMENTE ESTA LÍNEA para probar:
+        const heroes = renderizarListaSuperheroes(superheroes);
+        
+        // PASA DIRECTAMENTE superheroes:
+        res.render("dashboard", { heroes: superheroes }); 
+
+    } catch (error) {
+        console.error("Error en Dashboard:", error);
+        res.status(500).send("Error al cargar el Dashboard");
+    }
+}
+
 
 export async function obtenerTodosLosSuperheroesController(req, res) {
     try {

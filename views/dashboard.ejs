@@ -1,15 +1,27 @@
-head>
+<head>
     <meta charset="UTF-8">
     <title>Dashboard Superhéroes</title>
 </head>
 
 <a href="/dashboard/nuevo">Agregar Superhéroe</a>
 
+<!-- <ul>
+    <% heroes.forEach(function(hero){ %> <li>
+            <a href="/dashboard/modificar/<%= hero._id %>">                
+                <%= hero.nombreSuperHeroe %> - (Edad: <%= hero.edad %>)
+            </a>
+
+            <button onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
+                Eliminar
+            </button>
+        </li>
+    <% }); %>
+</ul> -->
 <ul>
     <% heroes.forEach(function(hero){ %>
         <li>
             <a href="/dashboard/modificar/<%= hero._id %>">
-                <%= hero.nombreSuperHeroe %> - (Edad: <%= hero.edad %>)
+                <%= hero.nombreSuperHeroe || "Sin Nombre" %> - (Edad: <%= hero.edad || "N/A" %>)
             </a>
 
             <button onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
@@ -29,9 +41,8 @@ head>
             const res = await fetch("/api/heroes/id/" + id, { method: "DELETE" });
 
             if (res.ok) {
-                //Verifica que el servidor respondió con un código exitoso (como un 200 o 204) 
-                // antes de decirle al usuario que todo salió bien.
-                alert(nombre + "eliminado correctamente.");
+                //
+               alert(nombre + " eliminado correctamente."); // 
                 // Refrescamos la página para que desaparezca de la lista
                 window.location.reload();
             } else {

@@ -53,7 +53,7 @@
 
             try {
                 // Enviar petición con ID
-                const response = await fetch('/api/heroes/id/<%= hero._id %>', { 
+                const response = await fetch('/api/heroes/<%= hero._id %>', { 
                     method: 'PUT', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
