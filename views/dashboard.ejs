@@ -21,7 +21,6 @@ head>
 
 <script>
     async function eliminar(id, nombre) {
-        // Agregamos espacios para que se lea bien: "eliminar a Batman?"
         const confirmar = confirm("¿Estás seguro que deseas eliminar a " + nombre + "? Esta acción no se puede deshacer.");
         
         if (!confirmar) return;
@@ -32,7 +31,7 @@ head>
             if (res.ok) {
                 //Verifica que el servidor respondió con un código exitoso (como un 200 o 204) 
                 // antes de decirle al usuario que todo salió bien.
-                alert(nombre + " eliminado correctamente.");
+                alert(nombre + "eliminado correctamente.");
                 // Refrescamos la página para que desaparezca de la lista
                 window.location.reload();
             } else {

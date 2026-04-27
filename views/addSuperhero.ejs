@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Superhéroe/title>
+</head>
+<body>
+    <h1>Agregar Supeheroe</h1>
+    <form id="superHeroForm">
+        <label for="nombreSuperHeroe">Nombre del Superheroe:</label>
+        <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" required"> <br>
+
+        <label for="nombreReal">Nombre Real:</label>
+        <input type="text" id="nombreReal name="nombreReal" required"> <br>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="0"> <br>
+
+        <label for="planetaOrigen">Planeta de Origen:</label>
+        <input type="text" id="planetaOrigen" name="planetaOrigen"> <br>
+
+        <label for="debilidad">Debilidad:</label>
+        <input type="text" id="debilidad" name="debilidad"> <br>
+
+         <label for="poderes">Poderes (separados por comar):</label>
+        <input type="text" id="poderes" name="poderes"> <br>
+
+        <label for="aliados">Aliados(separados por comar):</label>
+        <input type="text" id="aliados" name="aliados"> <br>
+
+         <label for="enemigos">Enemigos(separados por comar):</label>
+        <input type="text" id="enemigos" name="enemigos"><br>
+
+        <button type="Agregar">Agregar</button>
+    </form>
+<script>
+    document.getElementById("superHeroForm").addEventListener('submit', async function (even){
+        event.preventDefault();//Evita el envío tradicional del formulario
+
+        //Obtenemos los valores del formulario
+        const nombreSuperHeroe=document.getElementById('nombreSuperHeroe').value.trim();
+        const nombreReal=document.getElementById('nombreReal').value.trim();
+        const edad=document.getElementById('edad').value.trim();
+        const planetaOrigen=document.getElementById('planetaOrigen').value.trim();
+        const debilidad=document.getElementById('debilidad').value.trim();
+        const poderes=document.getElementById('poderes').value.split(',').map(p=> p.trim()).filter (p=>)
+        //
+        //
+        //
+        //Validaciones
+        const errors=[];
+        if (!nombreSuperHeroe||nombreSuperHeroe.length<3 || nombreSuperHeroe.length>60) {
+            errors.push("El nombre del Superheroe debe tener entre 3 y 60 caracteres");
+        }
+          if (!nombreReal||nombreReal.length<3 || nombreReal.length>60) {
+            errors.push("El nombre real del Superheroe debe tener entre 3 y 60 caracteres");
+        }
+
+
+    })
+</script>
+
+    
+</body>
+</html>
