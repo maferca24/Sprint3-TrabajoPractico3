@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Superhéroe/title>
+    <title>Agregar Superhéroe</title>
 </head>
+
 <body>
-    <h1>Agregar Supeheroe</h1>
+    <h1>Agregar Superhéroe</h1>
     <form id="superHeroForm">
-        <label for="nombreSuperHeroe">Nombre del Superheroe:</label>
-        <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" required"> <br>
+        <label for="nombreSuperHeroe">Nombre del Superhéroe:</label>
+        <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" required> <br>
 
         <label for="nombreReal">Nombre Real:</label>
-        <input type="text" id="nombreReal name="nombreReal" required"> <br>
+        <input type="text" id="nombreReal" name="nombreReal" required> <br>
 
         <label for="edad">Edad:</label>
         <input type="number" id="edad" name="edad" min="0"> <br>
@@ -23,54 +25,87 @@
         <label for="debilidad">Debilidad:</label>
         <input type="text" id="debilidad" name="debilidad"> <br>
 
-         <label for="poderes">Poderes (separados por comar):</label>
+        <label for="poderes">Poderes (separados por coma):</label>
         <input type="text" id="poderes" name="poderes"> <br>
 
-        <label for="aliados">Aliados(separados por comar):</label>
+        <label for="aliados">Aliados (separados por coma):</label>
         <input type="text" id="aliados" name="aliados"> <br>
 
-         <label for="enemigos">Enemigos(separados por comar):</label>
+        <label for="enemigos">Enemigos (separados por coma):</label>
         <input type="text" id="enemigos" name="enemigos"><br>
 
-        <button type="Agregar">Agregar</button>
+        <button type="submit">Agregar</button>
     </form>
-<script>
-    document.getElementById("superHeroForm").addEventListener('submit', async function (even){
-        event.preventDefault();//Evita el envío tradicional del formulario
 
-        //Obtenemos los valores del formulario
-        const nombreSuperHeroe=document.getElementById('nombreSuperHeroe').value.trim();
-        const nombreReal=document.getElementById('nombreReal').value.trim();
-        const edad=document.getElementById('edad').value.trim();
-        const planetaOrigen=document.getElementById('planetaOrigen').value.trim();
-        const debilidad=document.getElementById('debilidad').value.trim();
-        const poderes=document.getElementById('poderes').value.split(',').map(p=> p.trim()).filter (p=> p!=='');
-        const aliados=document.getElementById('aliados').value.split(',').map(p=> p.trim()).filter (p=> p!=='');
-        const enemigos=document.getElementById('enemigos').value.split(',').map(p=> p.trim()).filter (p=> p!=='');
-        
-        //Validaciones con javascript
-        const errors=[];
-        if (!nombreSuperHeroe||nombreSuperHeroe.length<3 || nombreSuperHeroe.length>60) {
-            errors.push("El nombre del Superheroe debe tener entre 3 y 60 caracteres");
-        }
-          if (!nombreReal||nombreReal.length<3 || nombreReal.length>60) {
-            errors.push("El nombre real del Superheroe debe tener entre 3 y 60 caracteres");
-        }
-          if (edad && (isNaN(edad)||edad<0)) {
-            errors.push("La edad debe ser un número mayor o igual a O");
-        }
-        if (poderes.length<1 ||poderes.some(p=>p.length <3 ||p.length >60)){
-            errors.push("Los poderes deber ser al menos un elemento entre 3 y 60 caracteres");
+    <script>
+        document.getElementById("superHeroForm").addEventListener('submit', async function (event) {
+            event.preventDefault(); // Evita el envío tradicional
 
-        }
-        if (errors.length>0){
-            alert (error.join ('\n'));
-            return;//Detiene el envío de errores
-        }
+            // Obtenemos los valores
+            const nombreSuperHeroe = document.getElementById('nombreSuperHeroe').value.trim();
+            const nombreReal = document.getElementById('nombreReal').value.trim();
+            const edad = document.getElementById('edad').value.trim();
+            const planetaOrigen = document.getElementById('planetaOrigen').value.trim();
+            const debilidad = document.getElementById('debilidad').value.trim();
 
-    })
-</script>
+            // Convertimos strings en arrays
+            const poderes = document.getElementById('poderes').value.split(',').map(p => p.trim()).filter(p => p !== '');
+            const aliados = document.getElementById('aliados').value.split(',').map(p => p.trim()).filter(p => p !== '');
+            const enemigos = document.getElementById('enemigos').value.split(',').map(p => p.trim()).filter(p => p !== '');
 
-    
+            // Validaciones
+            const errors = [];
+            if (nombreSuperHeroe.length < 3 || nombreSuperHeroe.length > 60) {
+                errors.push("El nombre del Superhéroe debe tener entre 3 y 60 caracteres");
+            }
+            if (nombreReal.length < 3 || nombreReal.length > 60) {
+                errors.push("El nombre real debe tener entre 3 y 60 caracteres");
+            }
+            if (edad && (isNaN(edad) || edad < 0)) {
+                errors.push("La edad debe ser un número mayor o igual a 0");
+            }
+            if (poderes.length < 1) {
+                errors.push("Debes agregar al menos un poder");
+            }
+
+            if (errors.length > 0) {
+                alert(errors.join('\n')); // Corregido 'error' por 'errors'
+                return;
+            }
+
+            const data = {
+                nombreSuperHeroe,
+                nombreReal,
+                edad: edad ? parseInt(edad, 10) : null,
+                planetaOrigen,
+                debilidad,
+                poderes,
+                aliados,
+                enemigos
+            };
+
+            try {
+                const response = await fetch('/api/heroes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Corregido 'aplication / json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Superhéroe agregado exitosamente');
+                    window.location.href = '/dashboard';
+                } else {
+                    const resError = await response.json();
+                    alert('Error al agregar: ' + (resError.message || 'Error desconocido'));
+                }
+            } catch (err) {
+                console.error('Error en la solicitud:', err);
+                alert('Ocurrió un error inesperado al conectar con el servidor');
+            }
+        });
+    </script>
 </body>
+
 </html>
