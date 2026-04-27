@@ -17,19 +17,37 @@
         </li>
     <% }); %>
 </ul> -->
-<ul>
-    <% heroes.forEach(function(hero){ %>
-        <li>
-            <a href="/dashboard/modificar/<%= hero._id %>">
-                <%= hero.nombreSuperHeroe || "Sin Nombre" %> - (Edad: <%= hero.edad || "N/A" %>)
-            </a>
-
-            <button onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
-                Eliminar
-            </button>
-        </li>
-    <% }); %>
-</ul>
+<table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Nombre Real</th>
+                <th>Edad</th>
+                <th>Planeta</th>
+                <th>Poderes</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% heroes.forEach(function(hero){ %>
+                <tr>
+                    <td><strong><%= hero.nombreSuperHeroe %></strong></td>
+                    <td><%= hero.nombreReal %></td>
+                    <td><%= hero.edad %></td>
+                    <td><%= hero.planetaOrigen %></td>
+                    <td>
+                        <%= hero.poderes.join(', ') %>
+                    </td>
+                    <td>
+                        <a href="/dashboard/modificar/<%= hero._id %>" class="btn-edit">Editar</a>
+                        <button class="btn-delete" onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
 
 <script>
     async function eliminar(id, nombre) {
