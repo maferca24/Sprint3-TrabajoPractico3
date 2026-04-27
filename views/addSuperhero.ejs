@@ -44,11 +44,11 @@
         const edad=document.getElementById('edad').value.trim();
         const planetaOrigen=document.getElementById('planetaOrigen').value.trim();
         const debilidad=document.getElementById('debilidad').value.trim();
-        const poderes=document.getElementById('poderes').value.split(',').map(p=> p.trim()).filter (p=>)
-        //
-        //
-        //
-        //Validaciones
+        const poderes=document.getElementById('poderes').value.split(',').map(p=> p.trim()).filter (p=> p!=='');
+        const aliados=document.getElementById('aliados').value.split(',').map(p=> p.trim()).filter (p=> p!=='');
+        const enemigos=document.getElementById('enemigos').value.split(',').map(p=> p.trim()).filter (p=> p!=='');
+        
+        //Validaciones con javascript
         const errors=[];
         if (!nombreSuperHeroe||nombreSuperHeroe.length<3 || nombreSuperHeroe.length>60) {
             errors.push("El nombre del Superheroe debe tener entre 3 y 60 caracteres");
@@ -56,7 +56,17 @@
           if (!nombreReal||nombreReal.length<3 || nombreReal.length>60) {
             errors.push("El nombre real del Superheroe debe tener entre 3 y 60 caracteres");
         }
+          if (edad && (isNaN(edad)||edad<0)) {
+            errors.push("La edad debe ser un número mayor o igual a O");
+        }
+        if (poderes.length<1 ||poderes.some(p=>p.length <3 ||p.length >60)){
+            errors.push("Los poderes deber ser al menos un elemento entre 3 y 60 caracteres");
 
+        }
+        if (errors.length>0){
+            alert (error.join ('\n'));
+            return;//Detiene el envío de errores
+        }
 
     })
 </script>
