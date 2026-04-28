@@ -9,27 +9,47 @@ router.get("/", getDashboardController);
 router.get("/nuevo", (req, res) => {
     res.render("addSuperhero");
 });
-
-// Ruta para mostrar el formulario de edición de un heroe
 router.get("/modificar/:id", async (req, res) => {
     try {
-        // 1. Usamos backticks `` para que ${req.params.id} funcione
-        const respuesta = await fetch(`http://dashboard/${req.params.id}`); 
+        // La URL debe ser COMPLETA y apuntar a tu API
+        const url = `http://localhost:3000/api/heroes/${req.params.id}`;
         
-        // 2. IMPORTANTE: Debes usar await aquí también
-        const heroe = await respuesta.json(); 
+        const respuesta = await fetch(url);
 
-        // 3. Verificamos si el héroe existe (usando la variable correcta 'heroe')
-        if (!heroe) {
-            return res.status(404).send("Superheroe no encontrado");
+        if (!respuesta.ok) {
+            return res.status(404).send("Superhéroe no encontrado en la API");
         }
 
+        const heroe = await respuesta.json();
         res.render("editSuperhero", { heroe });
+        
     } catch (error) {
+        // Aquí es donde te salía el error ENOTFOUND
         console.error("Error al obtener el héroe:", error);
         res.status(500).send("Error interno del servidor");
     }
 });
+// Ruta para mostrar el formulario de edición de un heroe
+// router.get("/modificar/:id", async (req, res) => {
+//     try {
+//         // 1. Usamos backticks `` para que ${req.params.id} funcione
+//         const respuesta = await fetch(`http://dashboard/${req.params.id}`); 
+        
+//         // 2. IMPORTANTE: Debes usar await aquí también
+//         const heroe = await respuesta.json(); 
+
+//         // 3. Verificamos si el héroe existe (usando la variable correcta 'heroe')
+//         if (!heroe) {
+//             return res.status(404).send("Superheroe no encontrado");
+//         }
+
+//         res.render("editSuperhero", { heroe });
+//     } catch (error) {
+//         console.error("Error al obtener el héroe:", error);
+//         res.status(500).send("Error interno del servidor");
+//     }
+// });
+
 //Ruta para mostrar el formulario de edición de un heroe
 // router.get("/modificar/:id", async (req, res) => {
 //     const respuesta = await fetch(
