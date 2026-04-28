@@ -15,7 +15,7 @@ class SuperHeroRepository extends IRepository {
 
             // Lo guardamos en MongoDB
             console.log('Superheroe creado con exito');
-            console.log(datosHeroe);
+            //console.log(datosHeroe);
             return await nuevoSuperheroe.save();
 
         } catch (error) {

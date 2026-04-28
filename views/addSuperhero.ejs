@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Superhéroe</title>
 </head>
-
 <body>
     <h1>Agregar Superhéroe</h1>
     <form id="superHeroForm">
@@ -34,78 +32,72 @@
         <label for="enemigos">Enemigos (separados por coma):</label>
         <input type="text" id="enemigos" name="enemigos"><br>
 
+        <label for="creador">Creador:</label>
+        <input type="text" id="creador" name="creador" value="Fernanda"><br>
+
         <button type="submit">Agregar</button>
+        <a href="/dashboard">Volver</a>
     </form>
 
     <script>
         document.getElementById("superHeroForm").addEventListener('submit', async function (event) {
-            event.preventDefault(); // Evita el envío tradicional
+            event.preventDefault(); 
 
-            // Obtenemos los valores
+            // 1. Obtener y limpiar valores
             const nombreSuperHeroe = document.getElementById('nombreSuperHeroe').value.trim();
             const nombreReal = document.getElementById('nombreReal').value.trim();
-            const edad = document.getElementById('edad').value.trim();
+            const edadRaw = document.getElementById('edad').value;
             const planetaOrigen = document.getElementById('planetaOrigen').value.trim();
             const debilidad = document.getElementById('debilidad').value.trim();
+            const creador = document.getElementById('creador').value.trim();
 
-            // Convertimos strings en arrays
             const poderes = document.getElementById('poderes').value.split(',').map(p => p.trim()).filter(p => p !== '');
             const aliados = document.getElementById('aliados').value.split(',').map(p => p.trim()).filter(p => p !== '');
             const enemigos = document.getElementById('enemigos').value.split(',').map(p => p.trim()).filter(p => p !== '');
 
-            // Validaciones
+            // 2. Validaciones de front-end
             const errors = [];
-            if (nombreSuperHeroe.length < 3 || nombreSuperHeroe.length > 60) {
-                errors.push("El nombre del Superhéroe debe tener entre 3 y 60 caracteres");
-            }
-            if (nombreReal.length < 3 || nombreReal.length > 60) {
-                errors.push("El nombre real debe tener entre 3 y 60 caracteres");
-            }
-            if (edad && (isNaN(edad) || edad < 0)) {
-                errors.push("La edad debe ser un número mayor o igual a 0");
-            }
-            if (poderes.length < 1) {
-                errors.push("Debes agregar al menos un poder");
-            }
+            if (nombreSuperHeroe.length < 3) errors.push("El nombre debe tener al menos 3 caracteres.");
+            if (poderes.length < 1) errors.push("Debes agregar al menos un poder.");
 
             if (errors.length > 0) {
-                alert(errors.join('\n')); // Corregido 'error' por 'errors'
+                alert(errors.join('\n'));
                 return;
             }
 
+            // 3. Crear el objeto DATA
             const data = {
                 nombreSuperHeroe,
                 nombreReal,
-                edad: edad ? parseInt(edad, 10) : null,
+                edad: edadRaw ? parseInt(edadRaw, 10) : 0,
                 planetaOrigen,
                 debilidad,
                 poderes,
                 aliados,
-                enemigos
+                enemigos,
+                creador
             };
 
             try {
-                const response = await fetch('/api/heroes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json' // Corregido 'aplication / json'
-                    },
+                // 4. Petición POST (Para crear uno nuevo)
+                const response = await fetch('/api/heroes', { // Cambié la ruta a la de creación
+                    method: 'POST', // Cambié PUT por POST
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
 
                 if (response.ok) {
-                    alert('Superhéroe agregado exitosamente');
+                    alert('¡Superhéroe creado con éxito!');
                     window.location.href = '/dashboard';
                 } else {
-                    const resError = await response.json();
-                    alert('Error al agregar: ' + (resError.message || 'Error desconocido'));
+                    const resErr = await response.json();
+                    alert('Error del servidor: ' + (resErr.message || 'No se pudo crear'));
                 }
             } catch (err) {
-                console.error('Error en la solicitud:', err);
-                alert('Ocurrió un error inesperado al conectar con el servidor');
+                console.error(err);
+                alert('Error de conexión al intentar crear el superhéroe');
             }
         });
     </script>
 </body>
-
 </html>

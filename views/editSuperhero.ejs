@@ -16,11 +16,12 @@
 
         <label>Edad:</label>
         <input type="number" id="edad" value="<%= heroe.edad %>"><br>
-       <label>Planeta de Origen:</label>
+
+        <label>Planeta de Origen:</label>
         <input type="text" id="planetaOrigen" value="<%= heroe.planetaOrigen %>"><br>
 
         <label>Poderes (separados por coma):</label>
-        <input type="text" id="poderes" value="<%= heroe.poderes ? heroe.poderes.join(', ') : '' %>">
+        <input type="text" id="poderes" value="<%= heroe.poderes ? heroe.poderes.join(', ') : '' %>"><br>
 
         <label>Aliados:</label>
         <input type="text" id="aliados" value="<%= heroe.aliados ? heroe.aliados.join(', ') : '' %>"><br>       
@@ -39,36 +40,42 @@
         document.getElementById("editForm").addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            // Tomar los datos del formulario- Quitar espacios?
-            const body = {
+            // 1. Capturamos TODOS los campos 
+            const bodyData = {
                 nombreSuperHeroe: document.getElementById('nombreSuperHeroe').value.trim(),
                 nombreReal: document.getElementById('nombreReal').value.trim(),
-                edad: parseInt(document.getElementById('edad').value),
+                edad: parseInt(document.getElementById('edad').value) || 0,
                 planetaOrigen: document.getElementById('planetaOrigen').value.trim(),
-                // Volvemos a convertir el texto en Array para enviarlo a la API
                 poderes: document.getElementById('poderes').value.split(',').map(p => p.trim()).filter(p => p !== ''),
-                aliados: document.getElementById('aliados').value.split(',').map(p => p.trim()).filter(p => p !== '')
+                aliados: document.getElementById('aliados').value.split(',').map(p => p.trim()).filter(p => p !== ''),
+                enemigos: document.getElementById('enemigos').value.split(',').map(p => p.trim()).filter(p => p !== ''),
+                creador: document.getElementById('creador').value.trim()
             };
 
             try {
-                // Enviar petición con ID
-                const response = await fetch('/api/heroes/<%= heroe._id %>', { 
+
+                // 2. Usamos bodyData en el JSON.stringify
+                //const response = await fetch('/api/heroes/<%= heroe._id %>', { 
+                const response = await fetch(`http://localhost:3000/api/heroes/${'<%= heroe._id %>' || '<%= heroe.id %>'}`, { 
+
                     method: 'PUT', 
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(bodyData)
                 });
 
                 if (response.ok) {
                     alert('¡Actualizado con éxito!');
                     window.location.href = '/dashboard';
                 } else {
-                    alert('Error al actualizar');
+                    const errorDetail = await response.json();
+                    console.error('Error del servidor:', errorDetail);
+                    alert('Error al actualizar: ' + (errorDetail.message || 'Error desconocido'));
                 }
             } catch (err) {
-                console.error(err);
-                alert('Error de conexión');
+                console.error('Error de red:', err);
+                alert('Error de conexión con el servidor');
             }
-        });
+        }); // <-- Aquí faltaba cerrar correctamente la función
     </script>
 </body>
 </html>

@@ -50,6 +50,7 @@ router.put('/heroes/:id', validateSuperHeroe, actualizarSuperHeroeController);
 
 
 
+
 /********
  Requerimiento: Agregar un endpoint que al realizarle una peticion
 Borre un superheroe por ID en la base de datos, y nos devuelva el superheroe borrado

@@ -20,7 +20,7 @@ import { renderizarListaSuperheroes, renderizarSuperheroe }
 export async function getDashboardController(req, res) {
     const superheroes = await obtenerTodosLosSuperheroes();
     //vista a renderizar con los datos de los superheroes
-    console.log(superheroes);
+    //console.log(superheroes);
     res.render("dashboard", { superheroes });
 }   
 
@@ -60,6 +60,9 @@ export async function crearSuperHeroeController(req, res) {
 
 export async function actualizarSuperHeroeController(req, res) {
     try {
+        console.log("¡RUTA ALCANZADA!"); // <--- Si esto NO sale en la terminal, la URL está mal.
+        console.log("ID recibido:", req.params.id); // ¿Llega el ID?
+        console.log("Cuerpo recibido:", req.body); // ¿Llega la info?
         const { id } = req.params; // Toma el ID que viene en la URL /api/heroes/:id
         const datosActualizados = req.body;
 
@@ -80,6 +83,9 @@ export async function actualizarSuperHeroeController(req, res) {
         });
     }
 }
+
+//Controladores para eliminar por ID y por nombre
+
 export async function eliminarSuperHeroeporIdController(req, res) {
     try {
         const { id } = req.params; // Toma el ID que viene en la URL /api/heroes/id/:id
