@@ -8,28 +8,22 @@ import {
 }
     from "../services/superheroesService.mjs";
 
-import { renderizarListaSuperheroes }
-    from '../views/responseViews.mjs'
+// import { renderizarListaSuperheroes }
+//     from '../views/responseViews.mjs'
+import { renderizarListaSuperheroes, renderizarSuperheroe }
+    from "../views/responseViews.mjs";
 
 //Nuevos TP3
 
 /// Nuevo controlador para renderizar el dashboard
 
 export async function getDashboardController(req, res) {
-    try {
-        const superheroes = await obtenerTodosLosSuperheroes();
-        
-        // COMENTE ESTA LÍNEA para probar:
-        const heroes = renderizarListaSuperheroes(superheroes);
-        
-        // PASA DIRECTAMENTE superheroes:
-        res.render("dashboard", { heroes: superheroes }); 
+    const superheroes = await obtenerTodosLosSuperheroes();
+    //vista a renderizar con los datos de los superheroes
+    console.log(superheroes);
+    res.render("dashboard", { superheroes });
+}   
 
-    } catch (error) {
-        console.error("Error en Dashboard:", error);
-        res.status(500).send("Error al cargar el Dashboard");
-    }
-}
 
 
 export async function obtenerTodosLosSuperheroesController(req, res) {

@@ -4,19 +4,6 @@
 </head>
 
 <a href="/dashboard/nuevo">Agregar Superhéroe</a>
-
-<!-- <ul>
-    <% heroes.forEach(function(hero){ %> <li>
-            <a href="/dashboard/modificar/<%= hero._id %>">                
-                <%= hero.nombreSuperHeroe %> - (Edad: <%= hero.edad %>)
-            </a>
-
-            <button onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
-                Eliminar
-            </button>
-        </li>
-    <% }); %>
-</ul> -->
 <table>
         <thead>
             <tr>
@@ -29,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <% heroes.forEach(function(hero){ %>
+            <% superheroes.forEach(function(hero){ %>
                 <tr>
                     <td><strong><%= hero.nombreSuperHeroe %></strong></td>
                     <td><%= hero.nombreReal %></td>

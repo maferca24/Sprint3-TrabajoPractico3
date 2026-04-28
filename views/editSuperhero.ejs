@@ -5,10 +5,10 @@
     <title>Editar Superhéroe</title>
 </head>
 <body>
-    <h1>Editar Superhéroe: <%= hero.nombreSuperHeroe %></h1>
+    <h1>Editar Superhéroe: <%= heroe.nombreSuperHeroe %></h1>
     
     <form id="editForm">
-        <label>Nombre del Superhéroe:</label>
+        <label>Nombre del Superhéroe:</label>   
         <input type="text" id="nombreSuperHeroe" value="<%= heroe.nombreSuperHeroe %>" required><br>
 
         <label>Nombre Real:</label>
@@ -16,18 +16,17 @@
 
         <label>Edad:</label>
         <input type="number" id="edad" value="<%= heroe.edad %>"><br>
-
-        <label>Planeta de Origen:</label>
+       <label>Planeta de Origen:</label>
         <input type="text" id="planetaOrigen" value="<%= heroe.planetaOrigen %>"><br>
 
         <label>Poderes (separados por coma):</label>
-        <input type="text" id="poderes" value="<%= heroe.poderes.join(', ') %>"><br>
+        <input type="text" id="poderes" value="<%= heroe.poderes ? heroe.poderes.join(', ') : '' %>">
 
         <label>Aliados:</label>
-        <input type="text" id="aliados" value="<%= heroe.aliados.join(', ') %>"><br>
-
+        <input type="text" id="aliados" value="<%= heroe.aliados ? heroe.aliados.join(', ') : '' %>"><br>       
+                
         <label>Enemigos:</label>
-        <input type="text" id="enemigos" value="<%= heroe.enemigos.join(', ') %>"><br>
+        <input type="text" id="enemigos" value="<%= heroe.enemigos ? heroe.enemigos.join(', ') : '' %>"><br>
 
         <label>Creador:</label>
         <input type="text" id="creador" value="<%= heroe.creador %>"><br>
@@ -53,7 +52,7 @@
 
             try {
                 // Enviar petición con ID
-                const response = await fetch('/api/heroes/<%= hero._id %>', { 
+                const response = await fetch('/api/heroes/<%= heroe._id %>', { 
                     method: 'PUT', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
