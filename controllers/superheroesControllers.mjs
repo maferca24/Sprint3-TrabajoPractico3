@@ -4,7 +4,8 @@
 import {
     obtenerTodosLosSuperheroes, crearSuperHeroe, actualizarSuperHeroe,
     eliminarSuperHeroeporID, eliminarSuperHeroeporNombre,
-    obtenerSuperheroePorId, buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30
+    obtenerSuperheroePorId, buscarSuperheroesPorAtributo, 
+    obtenerSuperheroesMayoresDe30
 }
     from "../services/superheroesService.mjs";
 

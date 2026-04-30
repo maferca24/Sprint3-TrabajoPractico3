@@ -9,12 +9,14 @@ router.get("/", getDashboardController);
 router.get("/nuevo", (req, res) => {
     res.render("addSuperhero");
 });
-
+//ruta para mostrar el formulario de edición de un heroe existente, obteniendo los datos del heroe desde la API
 router.get("/modificar/:id", async (req, res) => {
-    const respuesta = await fetch(`http://localhost:3000/api/heroes/${req.params.id}`);
+    const respuesta = await fetch(
+        `http://localhost:3000/api/heroes/id/${req.params.id}`,);
     const heroe = await respuesta.json();
-    if (!heroe)
-return res.status(404).send("Superhéroe no encontrado en la API");
+    if (!heroe){
+        return res.status(404).send("Superhéroe no encontrado en la API");
+    }
     res.render("editSuperhero", { heroe });
 }); 
 
