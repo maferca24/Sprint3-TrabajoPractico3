@@ -29,8 +29,8 @@
                     </td>
                     <td>
                         <!--usamos el _id, el valor que viene directo de el id de mongodb-->
-                        <a href="/dashboard/modificar/<%= hero._id %>" class="btn-edit">Editar</a>
-                        <!-- <button class="btn-edit" onclick="editar('<%= hero._id %>')">Modificar</button> -->
+                        <!--<a href="/dashboard/modificar/<%= hero._id %>" class="btn-edit">Editar</a>-->
+                        <button class="btn-edit" onclick="editar('<%= hero._id %>')">Modificar</button>
                         <button class="btn-delete" onclick="eliminar('<%= hero._id %>', '<%= hero.nombreSuperHeroe %>')">
                             Eliminar
                         </button>
@@ -64,8 +64,9 @@
             alert("No se pudo conectar con el servidor.");
         }
     }
-    // async function editar(id) {                             
-    //     // Redirigimos a la página de edición con el ID del héroe
-    //     window.location.href = "/dashboard/modificar/" + id;
-    // } 
+    async function editar(id) {  
+        console.log("ID del héroe a editar:", id); // Verifica que el ID se reciba correctamente                           
+     // Redirigimos a la página de edición con el ID del héroe
+        window.location.href = "/dashboard/modificar/" + id;
+     } 
 </script>

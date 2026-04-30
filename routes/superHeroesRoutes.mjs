@@ -46,7 +46,7 @@ router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);
 
 //PUT- Actualizar un superheroe por id
 //http://localhost:3000/api/heroes/:id
-router.put('/heroes/id/:id', validateSuperHeroe, actualizarSuperHeroeController);
+router.put('/heroes/:id', validateSuperHeroe, actualizarSuperHeroeController);
 //Modifique ruta del put para que sea mas descriptiva, indicando que se actualiza por id,
 //  y agregue el middleware de validación para asegurar que los datos enviados sean correctos 
 // antes de intentar actualizar el superhéroe en la base de datos.
