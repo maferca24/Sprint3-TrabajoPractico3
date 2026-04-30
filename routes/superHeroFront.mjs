@@ -20,3 +20,10 @@ return res.status(404).send("Superhéroe no encontrado en la API");
 
 export default router;
 
+// //ruta para mostrar el dashboard con la lista de heroes desde el controlador nuevo 
+//consumiendo la APi desde el backend y renderizando la vista con los datos obtenidos
+
+// router.get("/", getDashboardController);
+// const respuesta = await fetch("http://localhost:3000/api/heroes");
+// const heroes = await respuesta.json();
+// res.render("dashboard", { heroes });    
