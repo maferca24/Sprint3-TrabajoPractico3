@@ -14,8 +14,8 @@ export async function crearSuperHeroe(superheroe) {
     }
     return await superHeroRepository.crearSuperHeroe(superheroe);
 }
-export async function actualizarSuperHeroe(id, datos) {
-    return await superHeroRepository.actualizarSuperHeroe(id, datos);
+export async function actualizarSuperHeroe(id, datosActualizados) {
+    return await superHeroRepository.actualizarSuperHeroe(id, datosActualizados);
 }
 export async function eliminarSuperHeroeporID(id) {
     return await superHeroRepository.eliminarSuperHeroeporID(id);

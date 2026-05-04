@@ -1,5 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Editar Héroe</title>
+  </head>
+  <body>
+    <h1>Editar: <%= heroe.nombreSuperHeroe %></h1>
+    <form id="editForm">
+      <label
+        >Nombre de superhéroe:
+        <input
+          type="text"
+          name="nombreSuperHeroe"
+          value="<%= heroe.nombreSuperHeroe %>"
+          required
+        /> </label
+      ><br />
+      <label
+        >Nombre real:
+        <input
+          type="text"
+          name="nombreReal"
+          value="<%= heroe.nombreReal %>"
+          required
+        /> </label
+      ><br />
+      <label
+        >Edad:
+        <input
+          type="number"
+          name="edad"
+          value="<%= heroe.edad %>"
+          min="0"
+        /> </label
+      ><br />
+      <label
+        >Planeta de origen:
+        <input
+          type="text"
+          name="planetaOrigen"
+          value="<%= heroe.planetaOrigen %>"
+        /> </label
+      ><br />
+      <label
+        >Debilidad:
+        <input
+          type="text"
+          name="debilidad"
+          value="<%= heroe.debilidad %>"
+        /> </label
+      ><br />
+      <label
+        >Poderes (separados por coma):
+        <input
+          type="text"
+          name="poderes"
+          value="<%= heroe.poderes.join(', ') %>"
+        /> </label
+      ><br />
+      <label
+        >Aliados (separados por coma):
+        <input
+          type="text"
+          name="aliados"
+          value="<%= heroe.aliados.join(', ') %>"
+        /> </label
+      ><br />
+      <label
+        >Enemigos (separados por coma):
+        <input
+          type="text"
+          name="enemigos"
+          value="<%= heroe.enemigos.join(', ') %>"
+        /> </label
+      ><br />
+      <label
+        >Creador:
+        <input
+          type="text"
+          name="creador"
+          value="<%= heroe.creador %>"
+        /> </label
+      ><br />
+      <br />
+      <button type="submit">Guardar cambios</button>
+    </form>
+    <br /><br />
+    <a href="/dashboard">← Volver al dashboard</a>
+    <script>
+      document
+        .getElementById("editForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const form = e.target;
+          // constante para convertir los campos de texto separados por coma en arrays,
+          //  eliminando espacios extra y valores vacíos
+          const splitCSV = (val) =>
+            val
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean);
+          const body = {
+            nombreSuperHeroe: form.nombreSuperHeroe.value,
+            nombreReal: form.nombreReal.value,
+            edad: Number(form.edad.value),
+            planetaOrigen: form.planetaOrigen.value,
+            debilidad: form.debilidad.value,
+            poderes: splitCSV(form.poderes.value),
+            aliados: splitCSV(form.aliados.value),
+            enemigos: splitCSV(form.enemigos.value),
+            creador: form.creador.value,
+          };
+          const res = await fetch("http://localhost:3000/api/heroes/id/<%= heroe._id %>", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (res.ok) {
+            window.location.href = "/dashboard";
+          } else {
+            const error = await res.json();
+            alert(
+              "Error al guardar: " + (error.message || JSON.stringify(error)),
+            );
+          }
+        });
+    </script>
+  </body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -44,6 +174,7 @@
 
             // 1. Obtenemos el ID del héroe desde EJS
             const idHeroe = "<%= heroe._id %>";
+            console.log("ID del héroe a actualizar:", idHeroe);
             
             // 2. Mapeamos los datos con los nombres EXACTOS de tu base de datos
             const bodyData = {
@@ -84,4 +215,4 @@
         });
     </script>
 </body>
-</html>
+</html> -->

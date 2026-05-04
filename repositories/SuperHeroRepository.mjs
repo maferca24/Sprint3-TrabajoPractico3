@@ -30,7 +30,7 @@ class SuperHeroRepository extends IRepository {
             return await SuperHero.findByIdAndUpdate(
                 id,
                 { $set: datosActualizados },
-                { new: true } // { new: true } sirve para que nos devuelva el objeto ya modificado
+                { returnDocument:"after" }
             );
         } catch (error) {
             throw new Error('Error al actualizar el superhéroe en la base de datos');
