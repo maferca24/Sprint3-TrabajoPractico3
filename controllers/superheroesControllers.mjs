@@ -62,7 +62,7 @@ export async function crearSuperHeroeController(req, res) {
 export async function actualizarSuperHeroeController(req, res) {
     try {
        
-        console.log("Cuerpo recibido:", req.body); // ¿Llega la info?
+        //console.log("Cuerpo recibido:", req.body); // Verifica que el cuerpo de la solicitud se reciba correctamente
         const { id } = req.params; // Toma el ID que viene en la URL /api/heroes/:id
         const datosActualizados = req.body;
 

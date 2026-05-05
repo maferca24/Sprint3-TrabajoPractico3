@@ -16,12 +16,12 @@ router.get("/modificar/:id", async (req, res) => {
         `http://localhost:3000/api/heroes/${req.params.id}`,
     );
     const heroe = await respuesta.json();
-    console.log("Datos del héroe obtenido de la API:", heroe);
+    //console.log("Datos del héroe obtenido de la API:", heroe);
     if (!heroe){
         return res.status(404).send("Superhéroe no encontrado en la API");
     }
     else{
-    console.log("Datos del héroe a renderizar en la vista:", heroe);
+    //console.log("Datos del héroe a renderizar en la vista:", heroe);
 
       res.render("editSuperhero", { heroe });
 
