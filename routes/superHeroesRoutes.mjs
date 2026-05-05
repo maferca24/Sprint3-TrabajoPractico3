@@ -46,21 +46,9 @@ router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);
 
 //PUT- Actualizar un superheroe por id
 //http://localhost:3000/api/heroes/:id
-router.put('/heroes/:id', validateSuperHeroe, actualizarSuperHeroeController);
-//router.put('/heroes/id/:id',  actualizarSuperHeroeController);
-
-//Modifique ruta del put para que sea mas descriptiva, indicando que se actualiza por id,
-//  y agregue el middleware de validación para asegurar que los datos enviados sean correctos 
-// antes de intentar actualizar el superhéroe en la base de datos.
-//anteriormente era:
-//router.put('/heroes/:id', actualizarSuperHeroeController); (Ejercicio anterior falta validar con postman)
+router.put('/heroes/id/:id', validateSuperHeroe, actualizarSuperHeroeController);
 
 
-
-/********
- Requerimiento: Agregar un endpoint que al realizarle una peticion
-Borre un superheroe por ID en la base de datos, y nos devuelva el superheroe borrado
-*********/
 //DELETE- Elimnar un superheroe por id
 //http://localhost:3000/api/heroes/:id
 //http://localhost:3000/api/heroes/69e00b5f98572b8f21c7876d

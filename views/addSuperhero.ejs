@@ -34,8 +34,9 @@
 
         <label for="creador">Creador:</label>
         <input type="text" id="creador" name="creador" value="Fernanda"><br>
-
+        <br/>
         <button type="submit">Agregar</button>
+        <br/><br />
         <a href="/dashboard">Volver</a>
     </form>
 
@@ -43,7 +44,7 @@
         document.getElementById("superHeroForm").addEventListener('submit', async function (event) {
             event.preventDefault(); 
 
-            // 1. Obtener y limpiar valores
+            // Obtener y limpiar valores
             const nombreSuperHeroe = document.getElementById('nombreSuperHeroe').value.trim();
             const nombreReal = document.getElementById('nombreReal').value.trim();
             const edadRaw = document.getElementById('edad').value;
@@ -55,7 +56,7 @@
             const aliados = document.getElementById('aliados').value.split(',').map(p => p.trim()).filter(p => p !== '');
             const enemigos = document.getElementById('enemigos').value.split(',').map(p => p.trim()).filter(p => p !== '');
 
-            // 2. Validaciones de front-end
+            // Validaciones de front-end
             const errors = [];
             if (nombreSuperHeroe.length < 3) errors.push("El nombre debe tener al menos 3 caracteres.");
             if (poderes.length < 1) errors.push("Debes agregar al menos un poder.");
@@ -65,7 +66,7 @@
                 return;
             }
 
-            // 3. Crear el objeto DATA
+            // Crear el objeto DATA
             const data = {
                 nombreSuperHeroe,
                 nombreReal,
@@ -79,7 +80,7 @@
             };
 
             try {
-                // 4. Petición POST (Para crear uno nuevo)
+                // Petición POST (Para crear uno nuevo)
                 const response = await fetch('/api/heroes', { // Cambié la ruta a la de creación
                     method: 'POST', // Cambié PUT por POST
                     headers: { 'Content-Type': 'application/json' },

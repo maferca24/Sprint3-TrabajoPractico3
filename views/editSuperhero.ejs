@@ -117,6 +117,7 @@
             body: JSON.stringify(body),
           });
           if (res.ok) {
+              alert('¡Superhéroe actualizado con éxito!');
             window.location.href = "/dashboard";
           } else {
             const error = await res.json();

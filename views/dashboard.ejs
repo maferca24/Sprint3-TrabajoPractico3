@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <title>Dashboard Superhéroes</title>
 </head>
+<body>
+    <!--<h1 Dashboard de Superhéroes</h1>-->
+        <h1 style="text-align: center; font-family: Arial, sans-serif; 
+        margin-top: 30px; color: #333;">
+    Dashboard de Superhéroes
+</h1>
+        
+<!--<a href="/dashboard/nuevo">Agregar Superhéroe</a>-->
+<a href="/dashboard/nuevo" 
+   style="display: inline-block; 
+          padding: 10px 20px; 
+          background-color: #535e59; 
+          color: white; 
+          text-decoration: none; 
+          border-radius: 5px; 
+          margin-bottom: 20px;">
+   Agregar Superhéroe
+</a>
 
-<a href="/dashboard/nuevo">Agregar Superhéroe</a>
-<table>
+<table border="1">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -65,7 +82,7 @@
         }
     }
     async function editar(id) {  
-        console.log("ID del héroe a editar:", id); // Verifica que el ID se reciba correctamente                           
+     //console.log("ID del héroe a editar:", id); // Verifica que el ID se reciba correctamente                           
      // Redirigimos a la página de edición con el ID del héroe
         window.location.href = "/dashboard/modificar/" + id;
      } 
