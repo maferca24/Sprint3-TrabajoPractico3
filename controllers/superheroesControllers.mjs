@@ -61,8 +61,7 @@ export async function crearSuperHeroeController(req, res) {
 
 export async function actualizarSuperHeroeController(req, res) {
     try {
-        //console.log("¡RUTA ALCANZADA!"); // <--- Si esto NO sale en la terminal, la URL está mal.
-        //console.log("ID recibido:", req.params.id); // ¿Llega el ID?
+       
         console.log("Cuerpo recibido:", req.body); // ¿Llega la info?
         const { id } = req.params; // Toma el ID que viene en la URL /api/heroes/:id
         const datosActualizados = req.body;
