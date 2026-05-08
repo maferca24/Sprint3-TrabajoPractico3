@@ -2,20 +2,22 @@
 //La capa de ruta define los endpoints y mapea cada uno a su respectivo controlador
 //permitiendo que las solicitudes HTTP se manejen de forma estructurada y predecible
 
-import express from 'express';
+import express from 'express';//Importamos express para crear el router
 import { validateSuperHeroe } from '../middlewares/middlewareSuperheroes.mjs';
+//Importamos el middleware de validación 
+// para validar los datos de entrada al crear o actualizar un superhéroe
 
-//import { body, validationResult } from 'express-validator';
-//body:declara las reglas de validación sobre los campos del req. body. Devuelve un middleware.
-//validationResult: lee los errores que body()acumulóen la rquest y los epone.
+//import { body, validationResult } from 'express-validator';//
+// body:declara las reglas de validación sobre los campos del req. body. Devuelve un middleware.
+//validationResult: lee los errores que body()acumuló en la request y los expone.
 import {
     obtenerTodosLosSuperheroesController, crearSuperHeroeController, actualizarSuperHeroeController,
     eliminarSuperHeroeporIdController, eliminarSuperHeroeporNombreController, 
     obtenerSuperheroesMayoresDe30Controller, obtenerSuperheroePorIdController,buscarSuperheroesPorAtributoController,
     getDashboardController
-}    from '../controllers/superheroesControllers.mjs';
+}    from '../controllers/superheroesControllers.mjs';//Importamos los controladores para mapearlos a las rutas correspondientes
 
-const router = express.Router();
+const router = express.Router();//Creamos una instancia de Router para definir las rutas relacionadas con los superhéroes
 
 //Rutas fijas:
 //TP3-S2
@@ -45,16 +47,16 @@ router.get('/heroes', obtenerTodosLosSuperheroesController);
 router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);
 
 //PUT- Actualizar un superheroe por id
-//http://localhost:3000/api/heroes/:id
+//http://localhost:3000/api/heroes/id/69fcae060ee8a98eb62df9b7
 router.put('/heroes/id/:id', validateSuperHeroe, actualizarSuperHeroeController);
 
 
 //DELETE- Elimnar un superheroe por id
-//http://localhost:3000/api/heroes/:id
-//http://localhost:3000/api/heroes/69e00b5f98572b8f21c7876d
+//http://localhost:3000/api/heroes/id/69fdd8b855861cc38be5b6c1
 router.delete('/heroes/id/:id', eliminarSuperHeroeporIdController);
 
-//DELETE- Elimnar un superheroe por nombre
+//DELETE- Eliminar un superheroe por nombre
+//http://localhost:3000/api/heroes/nombre/Hombre Mosquita
 router.delete('/heroes/nombre/:nombre', eliminarSuperHeroeporNombreController);
 
 //POST- Validación
