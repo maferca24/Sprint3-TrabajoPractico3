@@ -44,11 +44,12 @@ router.get('/heroes', obtenerTodosLosSuperheroesController);
 
 //POST- Crear un superheroe
 //http://localhost:3000/api/heroes
-router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);
+router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);//Agregamos el middleware de validación antes del controlador 
+// para validar los datos de entrada al crear un superhéroe
 
 //PUT- Actualizar un superheroe por id
 //http://localhost:3000/api/heroes/id/69fcae060ee8a98eb62df9b7
-router.put('/heroes/id/:id', validateSuperHeroe, actualizarSuperHeroeController);
+router.put('/heroes/id/:id', validateSuperHeroe, actualizarSuperHeroeController);//Agregamos el middleware de validación antes del controlador
 
 
 //DELETE- Eliminar un superheroe por id

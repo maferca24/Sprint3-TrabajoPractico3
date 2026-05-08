@@ -1,131 +1,207 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Editar Héroe</title>
-  </head>
-  <body>
-    <h1>Editar: <%= heroe.nombreSuperHeroe %></h1>
-    <form id="editForm">
-      <label
-        >Nombre de superhéroe:
-        <input
-          type="text"
-          name="nombreSuperHeroe"
-          value="<%= heroe.nombreSuperHeroe %>"
-          required
-        /> </label
-      ><br />
-      <label
-        >Nombre real:
-        <input
-          type="text"
-          name="nombreReal"
-          value="<%= heroe.nombreReal %>"
-          required
-        /> </label
-      ><br />
-      <label
-        >Edad:
-        <input
-          type="number"
-          name="edad"
-          value="<%= heroe.edad %>"
-          min="0"
-        /> </label
-      ><br />
-      <label
-        >Planeta de origen:
-        <input
-          type="text"
-          name="planetaOrigen"
-          value="<%= heroe.planetaOrigen %>"
-        /> </label
-      ><br />
-      <label
-        >Debilidad:
-        <input
-          type="text"
-          name="debilidad"
-          value="<%= heroe.debilidad %>"
-        /> </label
-      ><br />
-      <label
-        >Poderes (separados por coma):
-        <input
-          type="text"
-          name="poderes"
-          value="<%= heroe.poderes.join(', ') %>"
-        /> </label
-      ><br />
-      <label
-        >Aliados (separados por coma):
-        <input
-          type="text"
-          name="aliados"
-          value="<%= heroe.aliados.join(', ') %>"
-        /> </label
-      ><br />
-      <label
-        >Enemigos (separados por coma):
-        <input
-          type="text"
-          name="enemigos"
-          value="<%= heroe.enemigos.join(', ') %>"
-        /> </label
-      ><br />
-      <label
-        >Creador:
-        <input
-          type="text"
-          name="creador"
-          value="<%= heroe.creador %>"
-        /> </label
-      ><br />
-      <br />
-      <button type="submit">Guardar cambios</button>
-    </form>
-    <br /><br />
-    <a href="/dashboard">← Volver al dashboard</a>
-    <script>
-      document
-        .getElementById("editForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const form = e.target;//
-          // constante para convertir los campos de texto separados por coma en arrays,
-          //  eliminando espacios extra y valores vacíos
-          const splitCSV = (val) =>//
-            val
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean);
-          const body = {
-            nombreSuperHeroe: form.nombreSuperHeroe.value,
-            nombreReal: form.nombreReal.value,
-            edad: Number(form.edad.value),
-            planetaOrigen: form.planetaOrigen.value,
-            debilidad: form.debilidad.value,
-            poderes: splitCSV(form.poderes.value),// Convertimos el string de poderes en un array
-            aliados: splitCSV(form.aliados.value),
-            enemigos: splitCSV(form.enemigos.value),
-            creador: form.creador.value,
-          };
-          const res = await fetch("/api/heroes/id/<%= heroe._id %>", {// Enviamos una solicitud PUT a la API para actualizar el héroe con los nuevos datos
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Héroe</title>
+</head>
+
+<body>
+  <h1>Editar: <%= heroe.nombreSuperHeroe %>
+  </h1>
+  <form id="editForm">
+    <label>Nombre de superhéroe:
+      <input type="text" name="nombreSuperHeroe" value="<%= heroe.nombreSuperHeroe %>" required /> </label><br />
+    <label>Nombre real:
+      <input type="text" name="nombreReal" value="<%= heroe.nombreReal %>" required /> </label><br />
+    <label>Edad:
+      <input type="number" name="edad" value="<%= heroe.edad %>" min="0" /> </label><br />
+    <label>Planeta de origen:
+      <input type="text" name="planetaOrigen" value="<%= heroe.planetaOrigen %>" /> </label><br />
+    <label>Debilidad:
+      <input type="text" name="debilidad" value="<%= heroe.debilidad %>" /> </label><br />
+    <label>Poderes (separados por coma):
+      <input type="text" name="poderes" value="<%= heroe.poderes.join(', ') %>" /> </label><br />
+    <label>Aliados (separados por coma):
+      <input type="text" name="aliados" value="<%= heroe.aliados.join(', ') %>" /> </label><br />
+    <label>Enemigos (separados por coma):
+      <input type="text" name="enemigos" value="<%= heroe.enemigos.join(', ') %>" /> </label><br />
+    <label>Creador:
+      <input type="text" name="creador" value="<%= heroe.creador %>" /> </label><br />
+    <br />
+    <button type="submit">Guardar cambios</button>
+  </form>
+  <br /><br />
+  <a href="/dashboard">← Volver al dashboard</a>
+  <script>
+
+    document
+      .getElementById("editForm")
+      .addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const form = e.target;
+
+        // Función para convertir CSV en array limpio
+        const splitCSV = (val) =>
+          val
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+
+        // Obtener y limpiar datos
+        const nombreSuperHeroe = form.nombreSuperHeroe.value.trim();
+        const nombreReal = form.nombreReal.value.trim();
+        const edadRaw = form.edad.value;
+        const planetaOrigen = form.planetaOrigen.value.trim();
+        const debilidad = form.debilidad.value.trim();
+        const creador = form.creador.value.trim();
+
+        const poderes = splitCSV(form.poderes.value);
+        const aliados = splitCSV(form.aliados.value);
+        const enemigos = splitCSV(form.enemigos.value);
+
+        // =========================
+        // VALIDACIONES
+        // =========================
+
+        const errors = [];
+
+        // nombreSuperHeroe
+        if (!nombreSuperHeroe) {
+
+          errors.push("El nombre del superhéroe es obligatorio.");
+
+        } else {
+
+          if (nombreSuperHeroe.length < 3) {
+            errors.push("El nombre del superhéroe debe tener mínimo 3 caracteres.");
+          }
+
+          if (nombreSuperHeroe.length > 60) {
+            errors.push("El nombre del superhéroe debe tener máximo 60 caracteres.");
+          }
+        }
+
+        // nombreReal
+        if (!nombreReal) {
+
+          errors.push("El nombre real es obligatorio.");
+
+        } else {
+
+          if (nombreReal.length < 3) {
+            errors.push("El nombre real debe tener mínimo 3 caracteres.");
+          }
+
+          if (nombreReal.length > 60) {
+            errors.push("El nombre real debe tener máximo 60 caracteres.");
+          }
+        }
+
+        // edad
+        if (!edadRaw) {
+
+          errors.push("La edad es obligatoria.");
+
+        } else {
+
+          const edad = Number(edadRaw);
+
+          if (isNaN(edad)) {
+            errors.push("La edad debe ser un número.");
+          }
+
+          if (edad < 0) {
+            errors.push("La edad no puede ser negativa.");
+          }
+        }
+
+        // poderes
+        if (poderes.length === 0) {
+
+          errors.push("Debes agregar al menos un poder.");
+
+        } else {
+
+          poderes.forEach((poder, index) => {
+
+            if (!poder.trim()) {
+              errors.push(`El poder #${index + 1} no puede estar vacío.`);
+            }
+
+            if (poder.length < 3) {
+              errors.push(`El poder "${poder}" debe tener mínimo 3 caracteres.`);
+            }
+
+            if (poder.length > 60) {
+              errors.push(`El poder "${poder}" debe tener máximo 60 caracteres.`);
+            }
+
           });
+        }
+
+        // Mostrar errores
+        if (errors.length > 0) {
+          alert(errors.join("\n"));
+          return;
+        }
+
+        // Crear body
+        const body = {
+
+          nombreSuperHeroe,
+          nombreReal,
+          edad: Number(edadRaw),
+          planetaOrigen,
+          debilidad,
+          poderes,
+          aliados,
+          enemigos,
+          creador,
+
+        };
+
+        try {
+
+          const res = await fetch("/api/heroes/id/<%= heroe._id %>", {
+
+            method: "PUT",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify(body),
+
+          });
+
           if (res.ok) {
-              alert('¡Superhéroe actualizado con éxito!');
+
+            alert("¡Superhéroe actualizado con éxito!");
             window.location.href = "/dashboard";
+
           } else {
+
             const error = await res.json();
+
             alert(
-              "Error al guardar: " + (error.message || JSON.stringify(error)),
+              "Error al guardar: " +
+              (error.message || JSON.stringify(error))
             );
           }
-        });
-    </script>
-  </body>
+
+        } catch (error) {
+
+          console.error(error);
+          alert("Error de conexión");
+
+        }
+
+      });
+
+  </script>
+</body>
+
 </html>

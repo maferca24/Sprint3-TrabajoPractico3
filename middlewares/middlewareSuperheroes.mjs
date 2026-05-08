@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
 
-import { body, validationResult } from 'express-validator';
-export const validateSuperHeroe = [
+import { body, validationResult } from 'express-validator';// body:declara las reglas de validación 
+// sobre los campos del req. body. Devuelve un middleware.
+export const validateSuperHeroe = [//validationResult: lee los errores que body()acumuló en la request y los expone.
     body("nombreSuperHeroe")
         .trim() //validar que no tenga espacios en blanco
         .notEmpty().withMessage("El Nombre de superheroe es requerido")
@@ -32,7 +33,7 @@ export const validateSuperHeroe = [
     //y los detalles de los errores. Si no , llama a next() para continuar al controlador
     (req, res, next) => {
         //La libreria validationResult(req) recoge los resultados de las validaciones anteriores
-        const errors = validationResult(req);
+        const errors = validationResult(req);//Si no esta vacio significa que hubo errores de validación
         //Si no esta vacio significa que hubo errores de validación
         if (!errors.isEmpty()) {
             //Si hay errores respondemos con un status 400 y un JSON que contiene los detalles de los errores
