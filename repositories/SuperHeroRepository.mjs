@@ -4,14 +4,14 @@
 import SuperHero from '../models/SuperHero.mjs';
 import IRepository from './IRepository.mjs'
 
-class SuperHeroRepository extends IRepository {
-    async obtenerTodos() {
+class SuperHeroRepository extends IRepository {// Implementamos los métodos definidos en la interfaz IRepository
+    async obtenerTodos() {// Método para obtener todos los superhéroes de la base de datos
         return await SuperHero.find({});
     }
-    async crearSuperHeroe(datosHeroe) {
-        try {
+    async crearSuperHeroe(datosHeroe) {// Método para crear un nuevo superhéroe en la base de datos
+        try {// Recibimos los datos del superhéroe a crear como argumento (datosHeroe)
             // Usamos 'datosHeroe' que es lo que recibe la función
-            const nuevoSuperheroe = new SuperHero(datosHeroe);
+            const nuevoSuperheroe = new SuperHero(datosHeroe);// Creamos una nueva instancia del modelo SuperHero con los datos recibidos
 
             // Lo guardamos en MongoDB
             console.log('Superheroe creado con exito');
@@ -65,9 +65,9 @@ class SuperHeroRepository extends IRepository {
     //Superheroes mayores a 30 años del Planeta Tierra y con mas de dos poderes
     async obtenerMayoresDe30() {
         return await SuperHero.find({
-            edad: { $gt: 30 },
-            planetaOrigen: 'Tierra',
-            'poderes.2': { $exists: true }
+            edad: { $gt: 30 },// Mayor a 30 años
+            planetaOrigen: 'Tierra',// Planeta de origen Tierra
+            'poderes.2': { $exists: true }// Más de dos poderes (índice 2 existe)
         });
     }
 }

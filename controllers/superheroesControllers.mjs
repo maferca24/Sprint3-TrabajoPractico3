@@ -29,9 +29,9 @@ export async function getDashboardController(req, res) {
 
 export async function obtenerTodosLosSuperheroesController(req, res) {
     try {
-        const superheroes = await obtenerTodosLosSuperheroes();
-        const superheroesFormateados = renderizarListaSuperheroes(superheroes);
-        res.status(200).json(superheroesFormateados);
+        const superheroes = await obtenerTodosLosSuperheroes();//   Llamamos a la función del servicio para obtener todos los superhéroes
+        const superheroesFormateados = renderizarListaSuperheroes(superheroes);//   Formateamos la lista de superhéroes para la respuesta
+        res.status(200).json(superheroesFormateados);//   Respondemos con la lista formateada y un código 200 (OK)
 
     } catch (error) {
 
@@ -43,8 +43,8 @@ export async function obtenerTodosLosSuperheroesController(req, res) {
 }
 export async function crearSuperHeroeController(req, res) {
     try {
-        const superheroe = req.body;
-        const nuevoSuperheroe = await crearSuperHeroe(superheroe);
+        const superheroe = req.body;//  Tomamos los datos del superhéroe que vienen en el cuerpo de la solicitud
+        const nuevoSuperheroe = await crearSuperHeroe(superheroe);//  Llamamos a la función del servicio para crear el superhéroe con los datos recibidos
 
         // Respondemos con el objeto creado y un código 201 (Creado)
         res.status(201).send({
@@ -133,9 +133,9 @@ export async function obtenerSuperheroePorIdController(req, res) {
 
     try {
 
-        const { id } = req.params;
+        const { id } = req.params;// Toma el ID que viene en la URL /api/heroes/:id
 
-        const superheroe = await obtenerSuperheroePorId(id);
+        const superheroe = await obtenerSuperheroePorId(id);// Llama a la función del servicio para obtener el superhéroe por su ID
 
         if (!superheroe) {
 

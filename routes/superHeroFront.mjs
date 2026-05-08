@@ -15,11 +15,12 @@ router.get("/nuevo", (req, res) => {
 });
 //ruta para mostrar el formulario de edición de un heroe existente, 
 // obteniendo los datos del heroe desde la API
+
 router.get("/modificar/:id", async (req, res) => {
-    console.log("ID del héroe a modificar:", req.params.id);
+    //console.log("ID del héroe a modificar:", req.params.id);
     const respuesta = await fetch(
         `http://localhost:3000/api/heroes/${req.params.id}`,
-    );
+    );//Hacemos una solicitud a la API para obtener los datos del héroe a modificar, usando el ID proporcionado en la URL
     const heroe = await respuesta.json();
     //console.log("Datos del héroe obtenido de la API:", heroe);
     if (!heroe){

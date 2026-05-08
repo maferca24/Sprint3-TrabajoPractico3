@@ -92,10 +92,10 @@
         .getElementById("editForm")
         .addEventListener("submit", async (e) => {
           e.preventDefault();
-          const form = e.target;
+          const form = e.target;//
           // constante para convertir los campos de texto separados por coma en arrays,
           //  eliminando espacios extra y valores vacíos
-          const splitCSV = (val) =>
+          const splitCSV = (val) =>//
             val
               .split(",")
               .map((s) => s.trim())
@@ -106,12 +106,12 @@
             edad: Number(form.edad.value),
             planetaOrigen: form.planetaOrigen.value,
             debilidad: form.debilidad.value,
-            poderes: splitCSV(form.poderes.value),
+            poderes: splitCSV(form.poderes.value),// Convertimos el string de poderes en un array
             aliados: splitCSV(form.aliados.value),
             enemigos: splitCSV(form.enemigos.value),
             creador: form.creador.value,
           };
-          const res = await fetch("http://localhost:3000/api/heroes/id/<%= heroe._id %>", {
+          const res = await fetch("/api/heroes/id/<%= heroe._id %>", {// Enviamos una solicitud PUT a la API para actualizar el héroe con los nuevos datos
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
