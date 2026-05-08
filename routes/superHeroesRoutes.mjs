@@ -51,7 +51,7 @@ router.post('/heroes', validateSuperHeroe, crearSuperHeroeController);
 router.put('/heroes/id/:id', validateSuperHeroe, actualizarSuperHeroeController);
 
 
-//DELETE- Elimnar un superheroe por id
+//DELETE- Eliminar un superheroe por id
 //http://localhost:3000/api/heroes/id/69fdd8b855861cc38be5b6c1
 router.delete('/heroes/id/:id', eliminarSuperHeroeporIdController);
 
