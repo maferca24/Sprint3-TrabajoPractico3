@@ -32,7 +32,7 @@ router.get('/heroes/:id', obtenerSuperheroePorIdController);
 //http://localhost:3000/api/heroes/buscar/planetaOrigen/Tierra
 router.get('/heroes/buscar/:atributo/:valor', buscarSuperheroesPorAtributoController);
 
-//
+//Rutas para operaciones CRUD
 //Todos los superheroes
 //GET- Mostrar todos los superheroes
 // http://localhost:3000/api/heroes
@@ -70,5 +70,4 @@ router.post('/heroes/con-validacion',
         res.send(req.body);
     },
 );
-
 export default router;
